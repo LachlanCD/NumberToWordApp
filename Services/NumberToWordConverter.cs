@@ -9,12 +9,15 @@ namespace NumberToWordApp.Services
             var dollars = (int)amount;
             var cents = (int)((amount - dollars) * 100);
 
+            if (dollars == 0 && cents == 0)
+                return "zero dollars.";
+
             var sb = new StringBuilder();
-            sb.Append(NumberToWords(dollars) + " dollar" + (dollars != 1 ? "s" : ""));
-            if (cents < 0) cents *= -1;
-            if (cents > 0)
+            sb.Append(NumberToWords(dollars) + (dollars != 0 ? " dollar" : "") + (dollars != 1 && dollars != 0 ? "s" : ""));
+            if (cents != 0)
             {
                 if (dollars != 0) sb.Append(" and ");
+                cents = Math.Abs(cents);
                 sb.Append(NumberToWords(cents) + " cent" + (cents != 1 ? "s" : ""));
             }
             return sb.ToString();
@@ -22,12 +25,48 @@ namespace NumberToWordApp.Services
 
         private string NumberToWords(int number)
         {
-            if (number == 0)
-                return "zero";
-
             if (number < 0)
                 return "negative " + NumberToWords(Math.Abs(number));
 
+            var words = new StringBuilder();
+
+            if ((number / 1000000000) > 0)
+            {
+                words.Append(NumberToWords(number / 1000000000) + " billion ");
+                number %= 1000000000;
+            }
+
+            if ((number / 1000000) > 0)
+            {
+                words.Append(NumberToWords(number / 1000000) + " million ");
+                number %= 1000000;
+            }
+
+            if ((number / 1000) > 0)
+            {
+                words.Append(NumberToWords(number / 1000) + " thousand ");
+                number %= 1000;
+            }
+
+            if ((number / 100) > 0)
+            {
+                words.Append(NumberToWords(number / 100) + " hundred ");
+                number %= 100;
+            }
+
+
+            Console.WriteLine("pre unit number to words {0}", words);
+
+            if (number > 0)
+            {
+                UnitsToWords(number, words);
+            }
+
+            return words.ToString().Trim();
+        }
+
+        private void UnitsToWords(int number, StringBuilder words)
+        {
             string[] unitsMap = {
                 "zero", "one", "two", "three", "four", "five", "six", "seven",
                 "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen",
@@ -39,42 +78,17 @@ namespace NumberToWordApp.Services
                 "seventy", "eighty", "ninety"
             };
 
-            var words = new StringBuilder();
+            if (words.Length != 0)
+                words.Append(" and ");
 
-            if ((number / 1_000_000) > 0)
+            if (number < 20)
+                words.Append(unitsMap[number]);
+            else
             {
-                words.Append(NumberToWords(number / 1_000_000) + " million ");
-                number %= 1_000_000;
+                words.Append(tensMap[number / 10]);
+                if ((number % 10) > 0)
+                    words.Append("-" + unitsMap[number % 10]);
             }
-
-            if ((number / 1_000) > 0)
-            {
-                words.Append(NumberToWords(number / 1_000) + " thousand ");
-                number %= 1_000;
-            }
-
-            if ((number / 100) > 0)
-            {
-                words.Append(NumberToWords(number / 100) + " hundred ");
-                number %= 100;
-            }
-
-            if (number > 0)
-            {
-                if (words.Length != 0)
-                    words.Append(" ");
-
-                if (number < 20)
-                    words.Append(unitsMap[number]);
-                else
-                {
-                    words.Append(tensMap[number / 10]);
-                    if ((number % 10) > 0)
-                        words.Append("-" + unitsMap[number % 10]);
-                }
-            }
-
-            return words.ToString().Trim();
         }
     }
 }
