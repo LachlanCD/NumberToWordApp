@@ -11,6 +11,9 @@ namespace NumberToWordApp.Services
     {
         public string Convert(decimal amount)
         {
+            if (amount <= int.MinValue || amount >= int.MaxValue)
+              return "Number too big, you don't need that much money.";
+
             var dollars = (int)amount;
             var cents = (int)((amount - dollars) * 100);
 
