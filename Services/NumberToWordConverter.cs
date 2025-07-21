@@ -20,7 +20,8 @@ namespace NumberToWordApp.Services
                 cents = Math.Abs(cents);
                 sb.Append(NumberToWords(cents) + " cent" + (cents != 1 ? "s" : ""));
             }
-            return sb.ToString();
+            var result = sb.ToString();
+            return string.Concat(result[0].ToString().ToUpper(), result.AsSpan(1), ".");
         }
 
         private string NumberToWords(int number)
@@ -53,9 +54,6 @@ namespace NumberToWordApp.Services
                 words.Append(NumberToWords(number / 100) + " hundred ");
                 number %= 100;
             }
-
-
-            Console.WriteLine("pre unit number to words {0}", words);
 
             if (number > 0)
             {
