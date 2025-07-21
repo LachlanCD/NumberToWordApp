@@ -1,6 +1,6 @@
 namespace NumberToWordApp.Services
 {
-  using System.Text;
+    using System.Text;
 
     public class NumberToWordsConverter
     {
@@ -10,11 +10,11 @@ namespace NumberToWordApp.Services
             var cents = (int)((amount - dollars) * 100);
 
             var sb = new StringBuilder();
-            if (dollars > 0)
-                sb.Append(NumberToWords(dollars) + " dollar" + (dollars != 1 ? "s" : ""));
+            sb.Append(NumberToWords(dollars) + " dollar" + (dollars != 1 ? "s" : ""));
+            if (cents < 0) cents *= -1;
             if (cents > 0)
             {
-                if (dollars > 0) sb.Append(" and ");
+                if (dollars != 0) sb.Append(" and ");
                 sb.Append(NumberToWords(cents) + " cent" + (cents != 1 ? "s" : ""));
             }
             return sb.ToString();
@@ -26,7 +26,7 @@ namespace NumberToWordApp.Services
                 return "zero";
 
             if (number < 0)
-                return "minus " + NumberToWords(Math.Abs(number));
+                return "negative " + NumberToWords(Math.Abs(number));
 
             string[] unitsMap = {
                 "zero", "one", "two", "three", "four", "five", "six", "seven",
