@@ -1,0 +1,19 @@
+﻿@model NumberToWordApp.Models.NumberConverterViewModel
+
+@{
+    ViewData["Title"] = "Dollar to Words Converter";
+}
+
+<h2>Dollar Amount to Words</h2>
+
+<form method="post" asp-controller="Home" asp-action="Index">
+    <label>Enter Amount: </label>
+    <input type="text" asp-for="InputAmount" />
+    <button type="submit">Convert</button>
+</form>
+
+@if (!string.IsNullOrEmpty(Model.Result))
+{
+    <p><strong>Result:</strong> @Model.Result</p>
+}
+
