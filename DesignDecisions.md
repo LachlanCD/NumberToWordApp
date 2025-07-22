@@ -11,7 +11,7 @@ This document outlines the chosen architecture and reasoning behind it for my "N
   - Chosen because I have more experience using .NET than Java.
   - Allows for a clean separation of concerns throughout the project.
   - Support for serving APIs and static files.
-  - It's a modern web framwork.
+  - It's a modern web framework.
 
 ### Frontend
 - **React 24 with Vite**
@@ -30,7 +30,7 @@ This document outlines the chosen architecture and reasoning behind it for my "N
 ### 1. Server-side rendered Razor Pages / Blazor
 - **Why not chosen:**
   - Server-side rendered pages are great for quickly and efficiently constructing a UI for testing, however, I am a lot more comfortable constructing and maintaining UIs in React.
-  - Originally this was the approach I made however, I chose to swap to due to the afformentioned familiarity.
+  - Originally this was the approach I made however, I chose to swap to due to the aforementioned familiarity.
   - Opting for the use of React pages also effectively separates concerns between the server and client, which while unnecessary for an application such as this, would allow for effective expansion in the future.
 
 ### 2. Separate Backend and Frontend Services
@@ -47,7 +47,7 @@ This document outlines the chosen architecture and reasoning behind it for my "N
 
 These decisions have resulted in:
 - Clean and maintainable architecture that can be extended in the future.
-- Envitonment that can be effectively unit tested.
+- Environment that can be effectively unit tested.
 - An easy to run and deploy containerised environment.
 
 ## Future Extensions
